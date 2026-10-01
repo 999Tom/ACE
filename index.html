@@ -31,7 +31,7 @@
       <div class="resource-links">
         <a class="button button-primary" id="paper-link" href="https://arxiv.org/abs/2607.04162" target="_blank" rel="noopener">Paper · arXiv <span aria-hidden="true">↗</span></a>
         <a class="button button-secondary" id="code-link" href="https://github.com/999Tom/ACE/" target="_blank" rel="noopener">Code <span aria-hidden="true">↗</span></a>
-        <a class="button button-secondary" id="video-link" href="#demo" hidden>Video <span aria-hidden="true">↓</span></a>
+        <a class="button button-secondary" id="video-link" href="#demo">Video <span aria-hidden="true">↓</span></a>
       </div>
       <p class="hero-summary">A language agent decides <em>what goes where</em>.<br>One learned pick-and-place policy carries out the transfers.</p>
     </section>
@@ -59,9 +59,10 @@
       <p class="figure-caption">Execution frames from the paper. Both tasks use the same controller, trained on generic pick-and-place demonstrations.</p>
     </section>
 
-    <section class="container video-section" id="demo" hidden aria-labelledby="demo-heading">
+    <section class="container video-section" id="demo" aria-labelledby="demo-heading">
       <div class="section-topline"><h2 id="demo-heading">ACE in action</h2><span class="small-label">Video</span></div>
-      <video id="demo-video" controls playsinline preload="metadata" poster="assets/formula-4.webp">Your browser does not support HTML video.</video>
+      <video id="demo-video" src="assets/demo.mp4" controls playsinline preload="metadata" poster="assets/formula-4.webp" aria-label="ACE semantic formula assembly demonstration">Your browser does not support HTML video. <a href="assets/demo.mp4">Download the demonstration video.</a></video>
+      <p class="figure-caption">Semantic Formula Assembly with live grounding and execution feedback.</p>
     </section>
 
     <section class="intro-section container" aria-labelledby="overview-heading">
