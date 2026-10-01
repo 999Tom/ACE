@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f8f7f3">
+  <meta name="description" content="ACE composes semantic robot manipulation tasks through a language agent, tracked pick-and-place masks, and one reusable visuomotor policy.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="ACE — An Agentic Manipulation Harness">
+  <meta property="og:description" content="Semantic task composition with a reusable visuomotor policy. Explore the method, physical experiments, and results.">
+  <title>ACE | Semantic Task Composition for Robot Manipulation</title>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="stylesheet" href="assets/style.css">
+  <script src="assets/config.js" defer></script>
+  <script src="assets/site.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="#top" aria-label="ACE, back to top"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span> ACE<span class="brand-subtitle">Embodied manipulation</span></a>
+      <nav aria-label="Main navigation"><a href="#method">Method</a><a href="#results">Results</a><a href="#citation">Citation</a></nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero container" id="top" aria-labelledby="paper-title">
+      <p class="eyebrow"><span aria-hidden="true"></span> Task-level zero-shot composition</p>
+      <h1 id="paper-title"><span class="title-ace">ACE:</span> An Agentic Manipulation Harness <span class="title-second">for Semantic Task Composition with a Reusable Visuomotor Policy</span></h1>
+      <p class="authors" aria-label="Authors"><span class="author-name">Iok Tong Lei</span><span class="author-name">QianZhi Li</span><span class="author-name">Ying Jie Yap</span><span class="author-name">Yujie Zhang</span><span class="author-name">Rui Zhong</span><span class="author-name">Haichao Gui</span><span class="author-name">Xiaolong Liu</span><span class="author-name">Zhidong Deng</span></p>
+      <div class="resource-links">
+        <a class="button button-primary" id="paper-link" href="https://arxiv.org/abs/2607.04162" target="_blank" rel="noopener">Paper · arXiv <span aria-hidden="true">↗</span></a>
+        <a class="button button-secondary" id="code-link" href="https://github.com/999Tom/ACE/" target="_blank" rel="noopener">Code <span aria-hidden="true">↗</span></a>
+        <a class="button button-secondary" id="video-link" href="#demo" hidden>Video <span aria-hidden="true">↓</span></a>
+      </div>
+      <p class="hero-summary">A language agent decides <em>what goes where</em>.<br>One learned pick-and-place policy carries out the transfers.</p>
+    </section>
+
+    <section class="task-section container" id="tasks" aria-labelledby="tasks-heading">
+      <div class="section-topline"><h2 id="tasks-heading">Two tasks. One shared policy.</h2><span class="small-label">Physical experiments</span></div>
+      <div class="task-tabs" role="tablist" aria-label="Choose a manipulation task">
+        <button id="tab-formula" role="tab" aria-selected="true" aria-controls="task-panel" data-task="formula"><span>01</span> Formula assembly</button>
+        <button id="tab-retrieval" role="tab" aria-selected="false" aria-controls="task-panel" tabindex="-1" data-task="retrieval"><span>02</span> Constraint retrieval</button>
+      </div>
+      <div class="task-panel" id="task-panel" role="tabpanel" aria-labelledby="tab-formula" tabindex="0">
+        <div class="task-media">
+          <div class="frame-stage"><img id="task-image" src="assets/formula-4.webp" width="1101" height="618" alt="Completed formula assembly: cubes 4, multiplication, and 3 placed on regions A, B, and C to form 4 × 3 = 12." fetchpriority="high"></div>
+          <div class="frame-toolbar"><span>Recorded execution frames</span><div class="frame-buttons" role="group" aria-label="Select an execution frame"><button data-frame="0" aria-label="Frame 1" aria-pressed="false">1</button><button data-frame="1" aria-label="Frame 2" aria-pressed="false">2</button><button data-frame="2" aria-label="Frame 3" aria-pressed="false">3</button><button data-frame="3" aria-label="Frame 4" aria-pressed="true">4</button></div></div>
+        </div>
+        <div class="task-description">
+          <span class="task-number" id="task-number">01 / 02</span>
+          <h3 id="task-title">Make an equation<br>that equals 12.</h3>
+          <p id="task-description">Select operands and an operator, then bind them to the three expression slots. Success requires both a valid equation and correct physical placement.</p>
+          <div class="assignment" id="task-assignment"><span class="assignment-label">Object → destination</span><p><strong>4</strong> → A <span>·</span> <strong>×</strong> → B <span>·</span> <strong>3</strong> → C</p></div>
+          <p class="task-note" id="task-note">Example outcome: 4 × 3 = 12.</p>
+        </div>
+      </div>
+      <p class="sr-only" id="frame-status" aria-live="polite" aria-atomic="true"></p>
+      <p class="figure-caption">Execution frames from the paper. Both tasks use the same controller, trained on generic pick-and-place demonstrations.</p>
+    </section>
+
+    <section class="container video-section" id="demo" hidden aria-labelledby="demo-heading">
+      <div class="section-topline"><h2 id="demo-heading">ACE in action</h2><span class="small-label">Video</span></div>
+      <video id="demo-video" controls playsinline preload="metadata" poster="assets/formula-4.webp">Your browser does not support HTML video.</video>
+    </section>
+
+    <section class="intro-section container" aria-labelledby="overview-heading">
+      <div class="section-label">The idea</div>
+      <div class="intro-copy"><h2 id="overview-heading">Compose the task.<br>Reuse the motion.</h2><p>Putting a cube down is a motor skill. Choosing the right cubes to form an equation also requires reasoning about their values, roles, and destinations.</p><p>ACE connects these decisions to physical execution through tracked pick-and-place masks. Persistent context keeps earlier object associations available when manipulation changes what the camera can see.</p></div>
+      <dl class="study-facts"><div><dt>1</dt><dd>shared visuomotor policy</dd></div><div><dt>~1 hour</dt><dd>of generic demonstrations</dd></div><div><dt>20</dt><dd>physical trials per task</dd></div></dl>
+    </section>
+
+    <section class="method-section" id="method" aria-labelledby="method-heading">
+      <div class="container">
+        <div class="section-label">Method</div>
+        <div class="section-heading"><h2 id="method-heading">From a semantic goal<br>to an executable transfer.</h2><p>The agent resolves task constraints and object roles. The mask interface turns each assignment into spatial targets for the learned controller.</p></div>
+        <ol class="method-steps">
+          <li><span class="step-number">01</span><h3>Reason &amp; bind</h3><p>Choose the object, its destination, and the next sub-goal from the instruction and scene context.</p></li>
+          <li><span class="step-number">02</span><h3>Ground &amp; track</h3><p>Encode the pick and place regions in one mask, then update those regions as the scene changes.</p></li>
+          <li><span class="step-number">03</span><h3>Execute &amp; assess</h3><p>Run the shared policy. Use the execution report and new observation to advance or retry.</p></li>
+        </ol>
+        <figure class="paper-figure"><button class="figure-button" data-enlarge="assets/concept.webp" data-figure-title="Semantic task composition in ACE" aria-label="Enlarge the semantic task composition diagram"><img src="assets/concept.webp" width="1800" height="720" alt="Different semantic tasks produce object-to-destination assignments. A tracked mask conditions one shared diffusion policy; persistent context supports assessment when a cube rotates and hides its pattern." loading="lazy"><span class="enlarge-label">Enlarge <span aria-hidden="true">↗</span></span></button><figcaption>Task semantics change; the object–destination mask remains the shared execution interface.</figcaption></figure>
+        <div class="method-detail"><div><h3>A small, explicit interface.</h3><p>Pick regions use pixel value <strong>127</strong>, place regions use <strong>255</strong>, and the background is <strong>0</strong>. The policy receives the tracked mask and robot state; the agent retains object identity and task meaning.</p></div><div><h3>Context survives a changed view.</h3><p>A turned cube can hide the pattern that identified it. ACE retains earlier object and conversational context alongside the live workflow and tracking state to support outcome assessment.</p></div></div>
+        <details class="framework-details"><summary>See the full ACE architecture <span aria-hidden="true">+</span></summary><figure class="paper-figure"><button class="figure-button" data-enlarge="assets/framework.webp" data-figure-title="The ACE architecture" aria-label="Enlarge the ACE architecture diagram"><img src="assets/framework.webp" width="2000" height="1138" alt="ACE architecture connecting workflow reasoning, outcome checking, multi-timescale memory, mask grounding and tracking, and downstream manipulation." loading="lazy"><span class="enlarge-label">Enlarge <span aria-hidden="true">↗</span></span></button><figcaption>The agent coordinates two robot-facing skills, MaskInterface and PickPlace, through execution feedback and persistent context.</figcaption></figure></details>
+      </div>
+    </section>
+
+    <section class="results-section container" id="results" aria-labelledby="results-heading">
+      <div class="section-label">Results</div>
+      <div class="section-heading"><h2 id="results-heading">Task-level composition<br>on a physical robot.</h2><p>20 randomized physical trials per task. The ACE controller is trained on generic transfers, without complete demonstrations of either evaluation task.</p></div>
+      <div class="result-highlights"><div><span class="result-value">70<span>%</span></span><div><h3>Semantic Formula Assembly</h3><p>14 of 20 complete tasks</p></div></div><div><span class="result-value">80<span>%</span></span><div><h3>Constraint Retrieval</h3><p>16 of 20 complete tasks</p></div></div></div>
+      <p class="table-hint" id="table-hint">Swipe left or right to see all results. ↔</p>
+      <div class="table-scroll" role="region" aria-label="Task performance comparison" aria-describedby="table-hint" tabindex="0"><table><caption>Complete task success and partial progress</caption><thead><tr><th scope="col">Method</th><th scope="col">Formula assembly<br><span>Success rate</span></th><th scope="col">Constraint retrieval<br><span>Success rate</span></th><th scope="col">Formula assembly<br><span>FGS / 20</span></th></tr></thead><tbody><tr class="ours"><th scope="row">ACE <span>full framework</span></th><td>70.0%</td><td>80.0%</td><td>18.0</td></tr><tr><th scope="row">ACE <span>without persistent memory</span></th><td>55.0%</td><td>70.0%</td><td>16.8</td></tr><tr><th scope="row">ACT</th><td>0.0%</td><td>0.0%</td><td>3.2</td></tr><tr><th scope="row">π<sub>0.5</sub></th><td>0.0%</td><td>0.0%</td><td>3.0</td></tr><tr><th scope="row">Standalone Diffusion Policy</th><td>0.0%</td><td>0.0%</td><td>3.4</td></tr></tbody></table></div>
+      <p class="table-note">ACT, π<sub>0.5</sub>, and standalone DP use full-task demonstrations in the reported training setup. Both ACE variants use the same primitive-trained DP; the memory ablation retains live workflow and tracking state.</p>
+      <div class="ablation-grid"><article><span class="small-label">Persistent context</span><h3>Earlier observations help<br>assess the current scene.</h3><p>Keeping persistent context improves observed success by <strong>15 percentage points</strong> in formula assembly and <strong>10 points</strong> in retrieval, corresponding to three and two additional successful trials.</p><p class="secondary-text">Removing memory leaves the same policy, active workflow, and tracker in place.</p></article><article><span class="small-label">Visual-input ablation</span><h3>A mask-only view<br>for the controller.</h3><div class="mini-results"><div><span>Mask only</span><strong>90%</strong><small>18 / 20 grasps</small></div><div><span>Mask + RGB</span><strong>30%</strong><small>6 / 20 grasps</small></div></div><p>Both variants use the same test objects and matched training and execution settings. This is a single-cube grasping evaluation.</p></article></div>
+      <details class="metric-details"><summary>Evaluation scope and metric definitions <span aria-hidden="true">+</span></summary><div class="detail-copy"><p><strong>Task-level zero-shot:</strong> the controller learns generic pick-and-place transfers. Task-specific object selection, destination assignment, and sequencing are composed at inference time.</p><p><strong>Success rate (SR):</strong> the fraction of completed trials, including allowed retries. An agent-controlled trial ends after three determinations that the same active sub-goal remains incomplete.</p><p><strong>Grounding accuracy (GA):</strong> correctly localized required targets divided by all required targets. Pick and place count separately; only the final result counts, so retries add no items. ACE achieves 100.0% GA on formula assembly and 97.5% on retrieval.</p><p><strong>Fine-Grained Score (FGS):</strong> partial progress in semantic selection, grasping, placement, and final equation correctness, with a maximum of 20.</p><p><strong>Scope:</strong> two cube-manipulation tasks and one learned primitive. Persistent object and conversational context are ablated jointly. Recovery observations are qualitative.</p></div></details>
+      <p class="version-note">These results follow the updated manuscript. The linked public arXiv v1 preprint contains the earlier evaluation.</p>
+    </section>
+
+    <section class="abstract-section" id="abstract" aria-labelledby="abstract-heading"><div class="container abstract-grid"><div><span class="section-label">Paper</span><h2 id="abstract-heading">Abstract</h2></div><p id="abstract-text">General-purpose manipulation requires both semantic reasoning over task constraints and reliable execution of contact-rich actions. We present ACE, an agentic manipulation harness that composes a high-level language agent with a reusable mask-conditioned visuomotor policy. Given an open-ended instruction, the agent solves semantic constraints, binds objects to destination roles, and decomposes the task into executable transfers represented by tracked pick-and-place masks. Execution feedback supports outcome assessment, re-grounding, and retry, while persistent object and task context preserves earlier associations when manipulation changes visible cues. We evaluate ACE on two physical multi-step tabletop tasks, Semantic Formula Assembly and Constraint Retrieval. The visuomotor policy is trained only on generic pick-and-place demonstrations and reused without complete demonstrations of either evaluation task, enabling task-level zero-shot composition. Across 20 randomized trials per task, ACE achieves 70% and 80% success, respectively, compared with 55% and 70% without persistent context. These results suggest that an agentic harness can extend a primitive-trained manipulation policy to semantically distinct tasks through explicit object-destination interfaces and closed-loop execution feedback.</p></div></section>
+
+    <section class="citation-section container" id="citation" aria-labelledby="citation-heading"><div class="citation-heading"><div><span class="section-label">Reference</span><h2 id="citation-heading">Cite the work</h2><p>Citation for the public arXiv preprint.</p></div><button class="button button-secondary" id="copy-citation" type="button">Copy BibTeX <span aria-hidden="true">⧉</span></button></div><pre><code id="bibtex">@article{lei2026ace,
+  title   = {ACE: Agentic Control for Embodied Manipulation
+             via Zero-shot Workflow Reasoning},
+  author  = {Lei, Iok Tong and Li, QianZhi and Yap, Ying Jie
+             and Zhang, Yujie and Zhong, Rui and Gui, Haichao
+             and Liu, Xiaolong and Deng, Zhidong},
+  journal = {arXiv preprint arXiv:2607.04162},
+  year    = {2026},
+  url     = {https://arxiv.org/abs/2607.04162}
+}</code></pre><p class="copy-status" id="copy-status" role="status" aria-live="polite"></p></section>
+  </main>
+  <footer class="site-footer container"><a class="brand" href="#top">ACE</a><p>Semantic task composition with a reusable visuomotor policy.</p><a href="#top">Back to top ↑</a></footer>
+  <dialog id="figure-dialog" aria-labelledby="dialog-title"><div class="dialog-toolbar"><h2 id="dialog-title">ACE figure</h2><div class="dialog-actions"><button id="zoom-figure" type="button" aria-pressed="false" aria-controls="dialog-image-wrap">Zoom in +</button><button id="close-dialog" type="button" aria-label="Close enlarged figure">Close ×</button></div></div><p class="dialog-hint" id="dialog-hint">Zoom in to read labels; scroll to explore the enlarged figure.</p><div class="dialog-image-wrap" id="dialog-image-wrap" tabindex="0" role="region" aria-label="Enlarged figure" aria-describedby="dialog-hint"><img id="dialog-image" alt=""></div></dialog>
+</body>
+</html>
